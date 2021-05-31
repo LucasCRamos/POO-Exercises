@@ -10,7 +10,7 @@ abstract public class Evento {
 	
 	}
 	
-	public boolean ready() {
+	public boolean pronto() {
 		
 		return System.currentTimeMillis() >= evtTime;
 	

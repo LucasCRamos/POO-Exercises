@@ -1,44 +1,44 @@
 package br.usp.ime.mac321.ep1.ex1;
 
  // This is just a way to hold Event objects.
-class EventSet {
+class ConjuntoDeEventos {
 	
-	private Evento[] events = new Evento[100];
-	private int index = 0;
-	private int next = 0;
+	private Evento[] eventos = new Evento[100];
+	private int indice = 0;
+	private int proximo = 0;
 	
 	public void add(Evento e) {
 		
-	if(index >= events.length)
+	if(indice >= eventos.length)
 		return; // (In real life, throw exception)
-		events[index++] = e;
+		eventos[indice++] = e;
 	}
 	
-	public Evento getNext() {
+	public Evento pegaProximo() {
 		
 		boolean looped = false;
 		
-		int start = next;
+		int inicio = proximo;
 		
 		do {
-			next = (next + 1) % events.length;
+			proximo = (proximo + 1) % eventos.length;
 		// See if it has looped to the beginning:
-		if(start == next) looped = true;
+		if(inicio == proximo) looped = true;
 		// If it loops past start, the list
 		// is empty:
-		if((next == (start + 1) % events.length)
+		if((inicio == (proximo + 1) % eventos.length)
 		&& looped)
 			return null;
 		
-		} while(events[next] == null);
+		} while(eventos[proximo] == null);
 		
-			return events[next];
+			return eventos[proximo];
 			
 		}
 	
-		public void removeCurrent() {
+		public void removeAtual() {
 			
-			events[next] = null;
+			eventos[proximo] = null;
 			
 		}
 	
@@ -46,7 +46,7 @@ class EventSet {
 	
 	public class Controlador {
 		
-	private EventSet es = new EventSet();
+	private ConjuntoDeEventos es = new ConjuntoDeEventos();
 	
 	public void insere(Evento c) { es.add(c); }
 	
@@ -54,15 +54,15 @@ class EventSet {
 		
 	Evento e;
 	
-		while((e = es.getNext()) != null) {
+		while((e = es.pegaProximo()) != null) {
 			
-			if(e.ready()) {
+			if(e.pronto()) {
 				
 				e.ação();
 				
 				System.out.println(e.descrição());
 				
-				es.removeCurrent();
+				es.removeAtual();
 			}
 		}
 	}

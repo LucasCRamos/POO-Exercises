@@ -5,26 +5,63 @@ public class Paciente {
 	private double temperatura; //entre 36 e 37 graus
 	private double concentracaoPAC; //entre 100 e 100mil unidades por mm³
 	private double aumentoTemperatura; //minimo 5 graus
-	private double frequenciaSurtos;
+	private int frequenciaSurtos;
 	private double velocidadeAumentoPAC;
 	
+	double temperaturaInicial;
+	double concentracaoInicial;
+	
+	public double getTemperatura() {
+		
+		return temperatura;
+		
+	}
+	
+	public double getConcentracaoPAC() {
+		
+		return concentracaoPAC;
+		
+	}
+	
+	public double getAumentoTemperatura() {
+		
+		return aumentoTemperatura;
+	}
+	
+	public int getFrequenciaSurtos() {
+		
+		return frequenciaSurtos;
+		
+	}
+	
+	public double getVelocidadeAumentoPAC() {
+		
+		return velocidadeAumentoPAC;
+		
+	}
+	
 	public Paciente(double temperatura, double concentracaoPAC, double aumentoTemperatura,
-			double frequenciaSurtos, double velocidadeAumentoPAC) {
+			int frequenciaSurtos, double velocidadeAumentoPAC) {
 		
 		this.temperatura = temperatura;
 		this.concentracaoPAC = concentracaoPAC;
 		this.aumentoTemperatura = aumentoTemperatura;
 		this.frequenciaSurtos = frequenciaSurtos;
 		this.velocidadeAumentoPAC = velocidadeAumentoPAC;
+		temperaturaInicial = temperatura;
+		concentracaoInicial = concentracaoPAC;
 
 	}
 	
 	//temperatura acima de 41 graus por 1h => morte
-	double valorTemperatura(double tempo) {
+	public double valorTemperatura(long tempo) {
 		
-		System.out.println("A temperatura do paciente é: " + temperatura);
+		if (tempo >= frequenciaSurtos)
+		temperatura = temperaturaInicial + aumentoTemperatura;
 		
-		if(temperatura >= 41) {
+		
+		
+		if(temperatura >= 41 && tempo >= (frequenciaSurtos+60)) {
 			
 			temperatura = -1;
 			concentracaoPAC = -1;
@@ -34,17 +71,17 @@ public class Paciente {
 		return temperatura;
 	}
 	
-	double valorConcentracao(double tempo) {
+	public double valorConcentracao(long tempo) {	
 		
-		System.out.println("A concentração de PAC do paciente é: " + concentracaoPAC);
 		
 		return concentracaoPAC;
 		
 	}
 	
-	boolean estaVivo() {
+	public boolean estaVivo(long tempo) {
+		
 			
-		if(temperatura < 0 && concentracaoPAC < 0) return false;
+		if(valorTemperatura(tempo) < 0) return false;
 			
 		else return true;
 		

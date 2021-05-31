@@ -1,4 +1,4 @@
-package br.usp.ime.mac321.ep1.ex2;
+package br.usp.ime.mac321.ep1.ex4;
 
 public class Medico {
 	
